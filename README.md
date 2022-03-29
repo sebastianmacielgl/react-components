@@ -98,7 +98,7 @@ Básicamente un HOC es una función que acepta un componente y retorna un nuevo 
 const ComponenteMejorado = funcionHOC(ComponenteParaMejorar);
 ```
 
-Un ejemplo simple, podemos crear un HOC que agrege un prop a un componente, con la ventaja de que el componente original no es modificado:
+Un ejemplo simple, podemos crear un HOC que agrege un `prop` a un componente, con la ventaja de que el componente original no es modificado:
 
 ```jsx
 function AgenteSimple(nombre) {
@@ -116,3 +116,60 @@ function withPropiedadEspecial(Componente) {
 
 function AgenteEspecial = withPropiedadEspecial(AgenteSimple)
 ```
+
+## React Hooks
+
+Los Hooks en React son una adición a la API que permite que los componentes funcionales puedan usar `state`, entre otras funcionalidades.
+
+### useState
+
+Es un hook que nos permite crear variables de estado y actualizarlas en nuestro componente. Debemos iniciarlizarla generalmente con algún valor.
+Del array hook useState se desestructuran dos cosas, la primera es la variable de estado, que podemos ponerle el nombre que nos guste. Y el segundo elemento es una función `setter` que básicamente tenemos que usar para actualizar la variable de estado.
+
+```jsx
+const [counter, setCounter] = useState(0)
+```
+
+### useEffect
+
+Es un hook para generar efectos secundarios en los componentes. Esto sería, causar un cambio e el componente reaccionando a otra cambio que haya sucedido.
+
+```jsx
+useEffect(acciónAEjecutar, dependencias)
+```
+
+El hook toma como primer parámetro la acción que queremos ejecutar, y como segundo parámetro dependencias, esto es, ejecutar la acción dependiendo del cambio de las segundas.
+
+```jsx
+useEffect(() => {
+    console.log('El contador cambió de valor')
+}, counter)
+```
+
+Se pueden configurar las dependencias de tres maneras. El segundo argumento se puede dejar vacío. Esto va a significar que cada vez que el componente se rerenderice, la acción también se va a ejecutar.
+La segunda manera es un array vacío, lo cual significa que la acción se ejecuta únicamente una vez al renderizarse el componente, pero nunca más.
+Y la última, es un array de dependencias: generalmente variables de estado que van a cmabiar con el tiempo o acciones del usuario a las que tenemos que estar atentos y deseamos que nuestra acción se ejecute según estos cambios.
+
+### useRef
+
+Este hook nos permite crear una referencia a un elemento cuando el componente se monta. Es útil cuando queremos por ejemplo hacer focus a un elemento o limpiar el value directamente.
+
+```jsx
+const inputRef = useRef(null)
+
+const handleClearInput() => {
+    inputRef.current.value = ''
+    inputRef.current.focus
+
+}
+
+return (
+    <>
+      <input ref={inputRef} type='text'>
+      <button type='button' onClick={handleClearInput}>
+        Borrar input
+      </button>
+    </>
+)
+```
+
